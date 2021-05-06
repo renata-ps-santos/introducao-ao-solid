@@ -1,0 +1,203 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SOLID Concepts Documentation",
+    "description": "This is an API to learn about SOLID concepts",
+    "version": "1.0.0",
+    "contact":{
+      "email": "renataps.360@gmail.com"
+    }
+  },
+  "paths":{
+    "/users":{
+      "post":{
+        "tags":["Users"],
+        "summary":"Create a user",
+        "description": "Create a new user",
+        "requestBody":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "type": "object",
+                "properties":{
+                  "name": {
+                    "type":"string"
+                  },
+                  "email":{
+                    "type":"string"
+                  }
+                },
+                "example":{
+                  "name": "User name sample",
+                  "email": "user@email.sample"
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201":{
+            "description":"Created"
+          },
+          "400":{
+            "description": "User already exists"
+          }
+        }
+      },
+      "get":{
+        "tags":["Users"],
+        "summary":"List users to admins",
+        "description": "List all users to admins only",
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type":"object",
+                    "properties":{
+                      "id":{
+                        "type": "string"
+                      },
+                      "admin":{
+                        "type": "boolean"
+                      },
+                      "created_at":{
+                        "type": "string"
+                      },
+                      "updated_at":{
+                        "type": "string"
+                      },
+                      "name":{
+                        "type": "string"
+                      },
+                      "email":{
+                        "type":"string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "This user have no permission to see users list"
+          }
+        }
+      }
+    },
+    "/users/{user_id}":{
+      "get":{
+        "tags":["Users"],
+        "summary":"List a specific user profile",
+        "description": "List a specific user profile",
+        "parameters":{
+          "- in": "path",
+          "name": "user_id",
+          "required":"true",
+          "schema": {
+            "type": "string",
+            "minimum": 1
+          },
+          "description": "The user ID"
+        },
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type":"object",
+                    "properties":{
+                      "id":{
+                        "type": "string"
+                      },
+                      "admin":{
+                        "type": "boolean"
+                      },
+                      "created_at":{
+                        "type": "string"
+                      },
+                      "updated_at":{
+                        "type": "string"
+                      },
+                      "name":{
+                        "type": "string"
+                      },
+                      "email":{
+                        "type":"string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin":{
+      "patch":{
+        "tags":["Users"],
+        "summary":"Set a admin user",
+        "description": "Set user to admin",
+        "parameters":{
+          "- in": "header",
+          "name": "user_id",
+          "required":"true",
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "minimum": 1
+          },
+          "description": "The user ID"
+        },
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type":"object",
+                    "properties":{
+                      "id":{
+                        "type": "string"
+                      },
+                      "admin":{
+                        "type": "boolean"
+                      },
+                      "created_at":{
+                        "type": "string"
+                      },
+                      "updated_at":{
+                        "type": "string"
+                      },
+                      "name":{
+                        "type": "string"
+                      },
+                      "email":{
+                        "type":"string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User not found."
+          }
+        }
+      }
+    }
+  }
+}
